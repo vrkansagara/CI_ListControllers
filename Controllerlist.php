@@ -17,13 +17,23 @@ if (!defined('BASEPATH'))
  * 
  * @author Peter Prins 
  */
-class ControllerList {
-	
+
+
+class ControllerList
+{
+
+
 	/**
 	 * Codeigniter reference 
 	 */
 	private $CI;
-	
+
+    /**
+     * Define EXT as your controller file extension.
+     * Defining in class is more secure than defining global.
+     */
+    const EXT = '.php';
+
 	/**
 	 * Array that will hold the controller names and methods
 	 */
@@ -63,12 +73,12 @@ class ControllerList {
 			// if the value in the loop is a directory loop through that directory
 			if(is_dir($controller)) {
 				// Get name of directory
-				$dirname = basename($controller, EXT);
+				$dirname = basename($controller, self::EXT);
 				
 				// Loop through the subdirectory
 				foreach(glob(APPPATH . 'controllers/'.$dirname.'/*') as $subdircontroller) {
 					// Get the name of the subdir
-					$subdircontrollername = basename($subdircontroller, EXT);
+					$subdircontrollername = basename($subdircontroller, self::EXT);
 					
 					// Load the controller file in memory if it's not load already
 					if(!class_exists($subdircontrollername)) {				
@@ -87,7 +97,7 @@ class ControllerList {
 			}
 			else if(pathinfo($controller, PATHINFO_EXTENSION) == "php"){
 				// value is no directory get controller name				
-			    $controllername = basename($controller, EXT);
+			    $controllername = basename($controller, self::EXT);
 									
 				// Load the class in memory (if it's not loaded already)
 				if(!class_exists($controllername)) {
